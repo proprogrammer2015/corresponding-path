@@ -59,14 +59,17 @@ test('should return correct output path for combined file name', t => {
 // test('should return correct output path for cwd paths', t => {
 //     const source = 'path/to/other/master.module.html';
 //     const destination = 'new_compiled';
-
-//     const [dir, name, ext, modulePath] = resolvePath(source, destination);
-//     t.deepEqual(dir, 'new_compiled/to/other'.split('/'));
-//     t.is(name, 'master.module');
-//     t.is(ext, 'html');
-//     t.is(modulePath, '/path/to/other');
 // });
 
+// test('should return correct output path for parent dest path', t => {
+//     const source = 'path/to/other/master.module.html';
+//     const destination = '../new_compiled';
+// });
+
+// test('should return correct output path for parent dest path', t => {
+//     const source = 'path/to/other/master.module.html';
+//     const destination = './../new_compiled';
+// });
 
 // test('should return correct output path in for absolute Unix path style', t => {
 //     const source = '/path/to/other/master.module.html';
