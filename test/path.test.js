@@ -66,9 +66,17 @@ test('should return correct output path for combined file name', t => {
 //     t.is(ext, 'html');
 //     t.is(modulePath, '/path/to/other');
 // });
+
 // test('should return correct output path in for absolute Windows source path style', t => {
 //     const source = 'C:\\path\\to\\other\\master.module.html';
 //     const destination = './new_compiled/files/to/share';
+
+//     const [dir, name, ext, modulePath] = resolvePath(source, destination);
+// });
+
+// test('should return correct output path in for absolute Windows source and destination path style', t => {
+//     const source = 'C:\\path\\to\\other\\master.module.html';
+//     const destination = 'C:\\Users\\test\\new_compiled\\files\\to\\share';
 
 //     const [dir, name, ext, modulePath] = resolvePath(source, destination);
 // });
