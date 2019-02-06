@@ -17,7 +17,7 @@ const notEmpty = item => !!item;
 
 const parsePath = (pathString) => {
     const separator = /[\\\/]/;
-    const { dir, ext, name } = path.parse(pathString);
+    const { root, dir, ext, name } = path.parse(pathString);
 
     let parsedDir = dir.split(separator);
     let parsedName = name;
@@ -26,7 +26,14 @@ const parsePath = (pathString) => {
         parsedName = '';
     }
 
+    let theRoot = root;
+    if (theRoot !== '/') {
+        theRoot = '';
+    }
+
     return {
+        isAbsolute: path.isAbsolute(pathString),
+        root: theRoot,
         dir: parsedDir.filter(notEmpty),
         ext,
         name: parsedName
@@ -50,6 +57,13 @@ export let resolvePath = (sourcePath, destinationPath) => {
         throw new Error('Source path have to contain file.');
     }
 
+    if ([
+        src.isAbsolute && !dst.isAbsolute,
+        !src.isAbsolute && dst.isAbsolute
+    ].some(isTrue => isTrue)) {
+        throw new Error('Source and destination paths have to be absolute or relative.');
+    }
+
     let index = getCommonPathIndex(src.dir, dst.dir);
     ++index;
 
@@ -58,10 +72,12 @@ export let resolvePath = (sourcePath, destinationPath) => {
     const srcPathExceptCommonPathAndFile = src.dir.slice(index + 1);
     const dir = commonPath.concat(dstPathExceptCommonPath).concat(srcPathExceptCommonPathAndFile);
 
-    return [
+    return {
         dir,
-        src.name,
-        src.ext,
-        src.dir.join('/')
-    ];
+        name: src.name,
+        ext: src.ext,
+        modulePath: src.root + src.dir.join('/'),
+        root: src.root,
+        dirStr: src.root + dir.join('/')
+    };
 }
