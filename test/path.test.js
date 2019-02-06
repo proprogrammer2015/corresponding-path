@@ -8,7 +8,7 @@ test('should return output path for common path', t => {
     const [dir, name, ext, modulePath] = resolvePath(source, destination);
     t.deepEqual(dir, './src/path_compiled/to/some'.split('/'));
     t.is(name, 'module');
-    t.is(ext, 'html');
+    t.is(ext, '.html');
     t.is(modulePath, './src/path/to/some');
 });
 
@@ -19,7 +19,7 @@ test('should return output path for miscellaneous paths', t => {
     const [dir, name, ext, modulePath] = resolvePath(source, destination);
     t.deepEqual(dir, './new_compiled/to/other'.split('/'));
     t.is(name, 'moduleName');
-    t.is(ext, 'html');
+    t.is(ext, '.html');
     t.is(modulePath, './path/to/other');
 });
 
@@ -30,7 +30,7 @@ test('should return output path for nested miscellaneous paths', t => {
     const [dir, name, ext, modulePath] = resolvePath(source, destination);
     t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
     t.is(name, 'moduleName');
-    t.is(ext, 'html');
+    t.is(ext, '.html');
     t.is(modulePath, './path/to/other');
 });
 
@@ -41,7 +41,7 @@ test('should return correct output path for invalid destination path', t => {
     const [dir, name, ext, modulePath] = resolvePath(source, destination);
     t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
     t.is(name, 'moduleName');
-    t.is(ext, 'html');
+    t.is(ext, '.html');
     t.is(modulePath, './path/to/other');
 });
 
@@ -52,7 +52,7 @@ test('should return correct output path for combined file name', t => {
     const [dir, name, ext, modulePath] = resolvePath(source, destination);
     t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
     t.is(name, 'master.module');
-    t.is(ext, 'html');
+    t.is(ext, '.html');
     t.is(modulePath, './path/to/other');
 });
 
@@ -78,7 +78,7 @@ test('should return correct output path for combined file name', t => {
 //     const [dir, name, ext, modulePath] = resolvePath(source, destination);
 //     t.deepEqual(dir, 'new_compiled/to/other'.split('/'));
 //     t.is(name, 'master.module');
-//     t.is(ext, 'html');
+//     t.is(ext, '.html');
 //     t.is(modulePath, '/path/to/other');
 // });
 
@@ -89,12 +89,16 @@ test('should return correct output path for combined file name', t => {
 //     const [dir, name, ext, modulePath] = resolvePath(source, destination);
 // });
 
-// test('should return correct output path in for absolute Windows source and destination path style', t => {
-//     const source = 'C:\\path\\to\\other\\master.module.html';
-//     const destination = 'C:\\Users\\test\\new_compiled\\files\\to\\share';
+test('should return correct output path in for absolute Windows paths', t => {
+    const source = 'C:\\Users\\path\\to\\other\\master.module.html';
+    const destination = 'C:\\Users\\new_compiled\\files\\to\\share';
 
-//     const [dir, name, ext, modulePath] = resolvePath(source, destination);
-// });
+    const [dir, name, ext, modulePath] = resolvePath(source, destination);
+    t.deepEqual(dir, 'C:/Users/new_compiled/files/to/share/to/other'.split('/'));
+    t.is(name, 'master.module');
+    t.is(ext, '.html');
+    t.is(modulePath, 'C:/Users/path/to/other');
+});
 
 test('should throw Error if destination path contains filename', t =>{
     const source = './path/to/other/moduleName.html';
