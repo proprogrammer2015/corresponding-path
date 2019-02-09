@@ -115,10 +115,14 @@ test('should throw Error if destination path contains filename', t => {
 });
 
 test('should throw Error if source path does not contain filename', t => {
-    const source = './path/to/other/moduleName';
+    const source = './path/to/other';
     const destination = './new_compiled/files/to/share';
 
-    t.throws(() => resolvePath(source, destination), 'Source path have to contain file.');
+    const { dir, name, ext, modulePath } = resolvePath(source, destination);
+    t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
+    t.is(name, '');
+    t.is(ext, '');
+    t.is(modulePath, './path/to/other');
 });
 
 test('should throw Error if source or destination are empty', t => {

@@ -53,10 +53,6 @@ export let resolvePath = (sourcePath, destinationPath) => {
 
     const src = parsePath(sourcePath);
 
-    if (!src.ext) {
-        throw new Error('Source path have to contain file.');
-    }
-
     if ([
         src.isAbsolute && !dst.isAbsolute,
         !src.isAbsolute && dst.isAbsolute
