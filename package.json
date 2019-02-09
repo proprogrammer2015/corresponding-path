@@ -2,13 +2,14 @@
   "name": "corresponding-path",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/path.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "ava",
-    "test:watch": "ava -w"
+    "test:watch": "ava -w",
+    "build": "babel --plugins @babel/plugin-transform-modules-commonjs src -d lib"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,8 @@
   "homepage": "https://github.com/proprogrammer2015/corresponding-path#readme",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/cli": "^7.2.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/register": "^7.0.0",
     "ava": "^1.2.0"
