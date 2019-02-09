@@ -2,7 +2,7 @@
   "name": "corresponding-path",
   "version": "1.0.0",
   "description": "",
-  "main": "src/path.js",
+  "main": "lib/path.js",
   "directories": {
     "test": "test"
   },
