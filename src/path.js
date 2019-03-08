@@ -60,7 +60,7 @@ export let resolvePath = (sourcePath, destinationPath) => {
         throw new Error('Source and destination paths have to be absolute or relative.');
     }
 
-    let index = getCommonPathIndex(src.dir, dst.dir);
+    let index = sourcePath.startsWith(destinationPath) ? dst.dir.length - 2 : getCommonPathIndex(src.dir, dst.dir);
     ++index;
 
     const commonPath = src.dir.slice(0, index);

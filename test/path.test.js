@@ -12,6 +12,61 @@ test('should return output path for common path', t => {
     t.is(modulePath, './src/path/to/some');
 });
 
+test('should return output path the same for equal src and dst folders', t => {
+    const source = './src/path/to/some/module.html';
+    const destination = './src';
+
+    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
+    t.deepEqual(dirStr, './src/path/to/some');
+    t.is(name, 'module');
+    t.is(ext, '.html');
+    t.is(modulePath, './src/path/to/some');
+});
+
+test('should return output path the same for equal nested src and dst folders', t => {
+    const source = './src/path/to/some/module.html';
+    const destination = './src/path';
+
+    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
+    t.deepEqual(dirStr, './src/path/to/some');
+    t.is(name, 'module');
+    t.is(ext, '.html');
+    t.is(modulePath, './src/path/to/some');
+});
+
+test('should return output path the same for equal deep nested src and dst folders', t => {
+    const source = './src/path/to/some/module.html';
+    const destination = './src/path';
+
+    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
+    t.deepEqual(dirStr, './src/path/to/some');
+    t.is(name, 'module');
+    t.is(ext, '.html');
+    t.is(modulePath, './src/path/to/some');
+});
+
+test('should return output path the same for equal deep nested src and dst folders with same start anme', t => {
+    const source = './src/path/to/some/module.html';
+    const destination = './src/path/t';
+
+    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
+    t.deepEqual(dirStr, './src/path/t/some');
+    t.is(name, 'module');
+    t.is(ext, '.html');
+    t.is(modulePath, './src/path/to/some');
+});
+
+// test('should return output path the same for equal src and dst folders 2', t => {
+//     const source = './src/path/to/some/module.html';
+//     const destination = 'src';
+
+//     const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
+//     t.deepEqual(dirStr, './src/path/to/some');
+//     t.is(name, 'module');
+//     t.is(ext, '.html');
+//     t.is(modulePath, './src/path/to/some');
+// });
+
 test('should return output path for miscellaneous paths', t => {
     const source = './path/to/other/moduleName.html';
     const destination = './new_compiled';
