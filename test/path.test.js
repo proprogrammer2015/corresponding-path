@@ -5,136 +5,72 @@ test('should return output path for common path', t => {
     const source = './src/path/to/some/module.html';
     const destination = './src/path_compiled';
 
-    const { dir, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dir, './src/path_compiled/to/some'.split('/'));
-    t.is(name, 'module');
-    t.is(ext, '.html');
-    t.is(modulePath, './src/path/to/some');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './src/path_compiled/to/some'.split('/'));
 });
 
 test('should return output path the same for equal src and dst folders', t => {
     const source = './src/path/to/some/module.html';
     const destination = './src';
 
-    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dirStr, './src/path/to/some');
-    t.is(name, 'module');
-    t.is(ext, '.html');
-    t.is(modulePath, './src/path/to/some');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './src/path/to/some'.split('/'));
 });
 
 test('should return output path the same for equal nested src and dst folders', t => {
     const source = './src/path/to/some/module.html';
     const destination = './src/path';
 
-    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dirStr, './src/path/to/some');
-    t.is(name, 'module');
-    t.is(ext, '.html');
-    t.is(modulePath, './src/path/to/some');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './src/path/to/some'.split('/'));
 });
 
 test('should return output path the same for equal deep nested src and dst folders', t => {
     const source = './src/path/to/some/module.html';
     const destination = './src/path';
 
-    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dirStr, './src/path/to/some');
-    t.is(name, 'module');
-    t.is(ext, '.html');
-    t.is(modulePath, './src/path/to/some');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './src/path/to/some'.split('/'));
 });
 
 test('should return output path the same for equal deep nested src and dst folders with same start anme', t => {
     const source = './src/path/to/some/module.html';
     const destination = './src/path/t';
 
-    const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dirStr, './src/path/t/some');
-    t.is(name, 'module');
-    t.is(ext, '.html');
-    t.is(modulePath, './src/path/to/some');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './src/path/t/some'.split('/'));
 });
-
-// test('should return output path the same for equal src and dst folders 2', t => {
-//     const source = './src/path/to/some/module.html';
-//     const destination = 'src';
-
-//     const { dirStr, name, ext, modulePath } = resolvePath(source, destination);
-//     t.deepEqual(dirStr, './src/path/to/some');
-//     t.is(name, 'module');
-//     t.is(ext, '.html');
-//     t.is(modulePath, './src/path/to/some');
-// });
 
 test('should return output path for miscellaneous paths', t => {
     const source = './path/to/other/moduleName.html';
     const destination = './new_compiled';
 
-    const { dir, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dir, './new_compiled/to/other'.split('/'));
-    t.is(name, 'moduleName');
-    t.is(ext, '.html');
-    t.is(modulePath, './path/to/other');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './new_compiled/to/other'.split('/'));
 });
 
 test('should return output path for nested miscellaneous paths', t => {
     const source = './path/to/other/moduleName.html';
     const destination = './new_compiled/files/to/share';
 
-    const { dir, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
-    t.is(name, 'moduleName');
-    t.is(ext, '.html');
-    t.is(modulePath, './path/to/other');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './new_compiled/files/to/share/to/other'.split('/'));
 });
 
 test('should return correct output path for invalid destination path', t => {
     const source = './path/to/other/moduleName.html';
     const destination = './new_compiled////files/to/share/';
 
-    const { dir, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
-    t.is(name, 'moduleName');
-    t.is(ext, '.html');
-    t.is(modulePath, './path/to/other');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './new_compiled/files/to/share/to/other'.split('/'));
 });
 
 test('should return correct output path for combined file name', t => {
     const source = './path/to/other/master.module.html';
     const destination = './new_compiled/files/to/share';
 
-    const { dir, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
-    t.is(name, 'master.module');
-    t.is(ext, '.html');
-    t.is(modulePath, './path/to/other');
-});
-
-// test('should return correct output path for cwd paths', t => {
-//     const source = 'path/to/other/master.module.html';
-//     const destination = 'new_compiled';
-// });
-
-// test('should return correct output path for parent dest path', t => {
-//     const source = 'path/to/other/master.module.html';
-//     const destination = '../new_compiled';
-// });
-
-// test('should return correct output path for parent dest path', t => {
-//     const source = 'path/to/other/master.module.html';
-//     const destination = './../new_compiled';
-// });
-
-test('should return correct output path in for absolute Unix paths style', t => {
-    const source = '/path/to/other/master.module.html';
-    const destination = '/new_compiled';
-
-    const { dir, name, ext, modulePath, root, dirStr } = resolvePath(source, destination);
-    t.deepEqual(dirStr, '/new_compiled/to/other');
-    t.is(name, 'master.module');
-    t.is(ext, '.html');
-    t.is(modulePath, '/path/to/other');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './new_compiled/files/to/share/to/other'.split('/'));
 });
 
 test('should throw error if absolute source and relative destination path passed', t => {
@@ -155,11 +91,8 @@ test('should return correct output path in for absolute Windows paths', t => {
     const source = 'C:\\Users\\path\\to\\other\\master.module.html';
     const destination = 'C:\\Users\\new_compiled\\files\\to\\share';
 
-    const { dir, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dir, 'C:/Users/new_compiled/files/to/share/to/other'.split('/'));
-    t.is(name, 'master.module');
-    t.is(ext, '.html');
-    t.is(modulePath, 'C:/Users/path/to/other');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, 'C:/Users/new_compiled/files/to/share/to/other'.split('/'));
 });
 
 test('should throw Error if destination path contains filename', t => {
@@ -173,11 +106,8 @@ test('should throw Error if source path does not contain filename', t => {
     const source = './path/to/other';
     const destination = './new_compiled/files/to/share';
 
-    const { dir, name, ext, modulePath } = resolvePath(source, destination);
-    t.deepEqual(dir, './new_compiled/files/to/share/to/other'.split('/'));
-    t.is(name, '');
-    t.is(ext, '');
-    t.is(modulePath, './path/to/other');
+    const { output } = resolvePath(source, destination);
+    t.deepEqual(output.dir, './new_compiled/files/to/share/to/other'.split('/'));
 });
 
 test('should throw Error if source or destination are empty', t => {

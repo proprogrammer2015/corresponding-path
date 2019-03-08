@@ -71,11 +71,10 @@ export let resolvePath = (sourcePath, destinationPath) => {
     const dir = commonPath.concat(dstPathExceptCommonPath).concat(srcPathExceptCommonPathAndFile);
 
     return {
-        dir,
-        name: src.name,
-        ext: src.ext,
-        modulePath: src.root + src.dir.join('/'),
-        root: src.root,
-        dirStr: src.root + dir.join('/')
+        module: src,
+        output: {
+            ...dst,
+            dir
+        }
     };
 }
