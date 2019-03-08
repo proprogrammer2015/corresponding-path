@@ -3,14 +3,16 @@ import path from 'path';
 export const getCommonPathIndex = (src, dst) => {
     const shortestNestedLength = Math.min(src.length, dst.length);
 
-    let index = -1;
     for (let i = 0; i < shortestNestedLength; i++) {
         if (src[i] !== dst[i]) {
-            return index;
+            return i - 1;
         }
-        index = i;
     }
-    return index;
+
+    if (shortestNestedLength === dst.length) {
+        return dst.length - 2;
+    }
+    return -1;
 };
 
 const notEmpty = item => !!item;
@@ -60,7 +62,7 @@ export let resolvePath = (sourcePath, destinationPath) => {
         throw new Error('Source and destination paths have to be absolute or relative.');
     }
 
-    let index = sourcePath.startsWith(destinationPath) ? dst.dir.length - 2 : getCommonPathIndex(src.dir, dst.dir);
+    let index = getCommonPathIndex(src.dir, dst.dir);
     ++index;
 
     const commonPath = src.dir.slice(0, index);
