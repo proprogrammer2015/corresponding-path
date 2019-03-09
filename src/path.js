@@ -21,26 +21,16 @@ const parsePath = (pathString) => {
     const separator = /[\\\/]/;
     const { root, dir, ext, name } = path.parse(pathString);
 
-    let parsedDir = dir.split(separator);
-    let parsedName = name;
-    if (!ext) {
-        parsedDir = parsedDir.concat([parsedName]);
-        parsedName = '';
-    }
-    parsedDir = parsedDir.filter(notEmpty);
-
-    let theRoot = root;
-    if (theRoot !== '/') {
-        theRoot = '';
-    }
+    const parsedDir = dir.split(separator).filter(notEmpty);
+    const modulePath = parsedDir.concat([name]).filter(notEmpty);
 
     return {
         isAbsolute: path.isAbsolute(pathString),
-        root: theRoot,
-        dir: parsedDir,
+        root,
+        dir: ext ? parsedDir : modulePath,
         ext,
-        name: parsedName,
-        modulePath: parsedDir.concat([name])
+        name: ext ? name : '',
+        modulePath
     };
 };
 
