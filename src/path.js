@@ -27,6 +27,7 @@ const parsePath = (pathString) => {
         parsedDir = parsedDir.concat([parsedName]);
         parsedName = '';
     }
+    parsedDir = parsedDir.filter(notEmpty);
 
     let theRoot = root;
     if (theRoot !== '/') {
@@ -36,10 +37,10 @@ const parsePath = (pathString) => {
     return {
         isAbsolute: path.isAbsolute(pathString),
         root: theRoot,
-        dir: parsedDir.filter(notEmpty),
+        dir: parsedDir,
         ext,
         name: parsedName,
-        modulePath: dir.concat([name])
+        modulePath: parsedDir.concat([name])
     };
 };
 
@@ -72,7 +73,7 @@ export let resolvePath = (sourcePath, destinationPath) => {
     const dir = commonPath.concat(dstPathExceptCommonPath).concat(srcPathExceptCommonPathAndFile);
 
     return {
-        module: src,
+        input: src,
         output: {
             ...dst,
             dir
