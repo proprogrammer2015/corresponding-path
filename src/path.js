@@ -38,7 +38,8 @@ const parsePath = (pathString) => {
         root: theRoot,
         dir: parsedDir.filter(notEmpty),
         ext,
-        name: parsedName
+        name: parsedName,
+        modulePath: dir.concat([name])
     };
 };
 
