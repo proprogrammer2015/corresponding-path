@@ -66,7 +66,9 @@ export let resolvePath = (sourcePath, destinationPath) => {
         input: src,
         output: {
             ...dst,
-            dir
+            dir,
+            modulePath: `${dir.join('/')}/${src.name}`,
+            full: `${dir.join('/')}/${src.name}${src.ext}`
         }
     };
 }
